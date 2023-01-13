@@ -9,11 +9,11 @@ Scenarios for the API [Seu Barriga's Bank Accounts](http://seubarriga.wcaquino.m
 Install the latest [**Java JDK**](https://www.java.com/pt_BR/download/) and search for ``Start Menu > Type 'Environment' > click on 'Edit Environment Variables' > Environment Variables``.
 > Oracle Guide: [**Enviroment Variables**](https://docs.oracle.com/en/database/oracle/machine-learning/oml4r/1.5.1/oread/creating-and-modifying-environment-variables-on-windows.html#GUID-DD6F9982-60D5-48F6-8270-A27EC53807D0)
 
-- Create a new user variable called ``JAVA_HOME`` and set the path that Java were installed;\
+- Create a new user variable called ``JAVA_HOME`` and set the path that Java were installed;
 - Create a new variable at ``Path`` adding the value ``%JAVA_HOME%\bin``.
 
-Download [**Apache Maven**](https://maven.apache.org/download.cgi), unzip at any folder (e.g.: /Downloads).\
-Create a new variable at ``Path`` and set the path that Apache Maven were unzipped (e.g.: ``C:\apache-maven-{version.number}}\bin``)
+Download [**Apache Maven**](https://maven.apache.org/download.cgi), unzip at any folder (e.g.: /Downloads).
+Create a new variable at ``Path`` and set the path that Apache Maven were unzipped (e.g.: ``C:\apache-maven-{version.number}\bin``)
 > Maven installation guide: [**Installing Apache Maven**](https://maven.apache.org/install.html)
 
 Install the latest [**GIT**](https://git-scm.com/download/win) to clone the repository.
