@@ -1,7 +1,7 @@
 # Bank Accounts Automation with Rest-Assured Framework
 
 Walkthrough to install, set up and run the scenarios with Rest-Assured framework.
-Used in this project Rest-Assured + JUnit5 for the tests with Hamcrest to assertions. 
+Used in this project Rest-Assured, JUnit5, Maven and Hamcrest for assertions. 
 
 Scenarios for the API [Seu Barriga's Bank Accounts](http://seubarriga.wcaquino.me).
 
@@ -35,13 +35,13 @@ Install **GIT**: ``sudo apt install git``
 ##
 ### Clone the Repository and Install Packages
 
-In your terminal (with admin privileges), run this command to clone and install all dependencies
+In your terminal (with admin privileges), run this command to clone project, install all dependencies and run the tests
 
 ```bash
-[WIP] git clone https://github.com/LittleCout0/bank-account-automation-with-restassured && cd bank-account-automation-with-restassured && 
+git clone https://github.com/LittleCout0/bank-account-automation-with-restassured && cd bank-account-automation-with-restassured && mvn install 
 ```
 
-To run all tests use the command: `xpto`  
+To run the suite tests use the command: ``mvn test``  
 
 ##
 
@@ -53,6 +53,8 @@ GitHub: [_Bank Accounts Automation with Rest-Assured Framework_](https://github.
 
 #### Packages
 
-- [Rest-Assured](https://mvnrepository.com/artifact/io.rest-assured/rest-assured) - API automation framework
-- [JUnit](https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api) - Test framework
+- [Rest-Assured](https://rest-assured.io/) - API automation framework
+- [JUnit5](https://junit.org/junit5/docs/current/user-guide/) - Test framework
 - [Apache Maven](https://maven.apache.org/index.html) - Build tool
+- [Maven Surefire](https://maven.apache.org/surefire/maven-surefire-plugin/) - Plugin for unit tests
+- [JetBrains Annotations](https://www.jetbrains.com/help/idea/annotating-source-code.html) - Set of Java annotations
