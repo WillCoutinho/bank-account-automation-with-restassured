@@ -1,6 +1,7 @@
 package org.coutinho.rest.tests;
 
 import io.restassured.response.Response;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.coutinho.rest.core.Accounts;
 import org.coutinho.rest.core.BaseTest;
 import org.junit.jupiter.api.DisplayName;
@@ -15,14 +16,11 @@ import static org.hamcrest.Matchers.notNullValue;
 @DisplayName("Account Scenarios")
 @Tag("AccountRegressionTest")
 public class AccountsTest extends BaseTest {
-    private static final String ACCOUNT_NAME_TO_EDIT = "Account QA Test v2";
-    private static final String ACCOUNT_NAME_TO_ADD = "Account QA Test v1";
 
     @Test
     @DisplayName("Should add a new account successfully")
     public void shouldAddNewAccount() {
-        Accounts accountUtils = new Accounts();
-        HashMap<String, String> accountName = accountUtils.createAccountName(ACCOUNT_NAME_TO_ADD);
+        HashMap<String, String> accountName = Accounts.generateAccountName(RandomStringUtils.randomAlphabetic(5));
 
         given()
                 .body(accountName)
@@ -38,8 +36,8 @@ public class AccountsTest extends BaseTest {
     @Test
     @DisplayName("Should edit an account successfully")
     public void shouldEditAnAccount() {
-        Response accountToEdit = new Accounts().createAccountAndReturnItsData();
-        HashMap<String, String> accountName = new Accounts().createAccountName(ACCOUNT_NAME_TO_EDIT);
+        Response accountToEdit = Accounts.createAccountAndReturnItsData();
+        HashMap<String, String> accountName = Accounts.generateAccountName(RandomStringUtils.randomAlphabetic(10));
 
         given()
                 .body(accountName)
@@ -53,10 +51,10 @@ public class AccountsTest extends BaseTest {
     @Test
     @DisplayName("Should not allow insert an account with name that already exists")
     public void shouldNotInsertAccountAlreadyExisted() {
-        Response accountAlreadyExists = new Accounts().createAccountAndReturnItsData();
+        Response accountAlreadyExists = Accounts.createAccountAndReturnItsData();
 
         given()
-                .body(new Accounts().createAccountName(accountAlreadyExists.path("nome")))
+                .body(Accounts.generateAccountName(accountAlreadyExists.path("nome")))
                 .when()
                 .post("/contas")
                 .then()

@@ -1,34 +1,27 @@
 package org.coutinho.rest.core;
 import io.restassured.RestAssured;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.HashMap;
 import static io.restassured.RestAssured.given;
 
-public class Authentication {
+public final class Authentication {
+    private static final String EMAIL_TEST = "coutinho@test";
+    private static final String PASSWORD_TEST = "123456";
 
-    private final String email = "coutinho@test";
+    @NotNull
+    public static HashMap<String, String> getValidLoginBody(){
+        HashMap<String, String> loginBody = new HashMap<>();
+        loginBody.put("email", EMAIL_TEST);
+        loginBody.put("senha", PASSWORD_TEST);
 
-    private final String password = "123456";
-
-    private String getEmail(){
-        return this.email;
+        return loginBody;
     }
 
-    private String getPassword() {
-        return this.password;
-    }
-
-    public HashMap<String, String> getLoginBody(){
-        HashMap<String, String> login = new HashMap<>();
-        login.put("email", getEmail());
-        login.put("senha", getPassword());
-
-        return login;
-    }
-
-    public void login(){
+    public static void login(){
         String authToken =
                 given()
-                        .body(getLoginBody())
+                        .body(getValidLoginBody())
                         .when()
                         .post("/signin")
                         .then()

@@ -11,10 +11,11 @@ import static org.hamcrest.Matchers.is;
 @DisplayName("Account Balance Scenarios")
 @Tag("BalanceRegressionTest")
 public class BalanceTest extends BaseTest {
+
     @Test
     @DisplayName("Should validate if account value is available")
     public void shouldValidateAccountBalance() {
-        Integer accountId = new Accounts().getAccountIdByName("Conta para saldo");
+        Integer accountId = Accounts.getAccountIdByName("Conta para saldo");
 
         given()
                 .when()
@@ -23,5 +24,4 @@ public class BalanceTest extends BaseTest {
                 .statusCode(200)
                 .body("find{it.conta_id == " + accountId + "}.saldo", is("534.00"));
     }
-
 }

@@ -26,6 +26,6 @@ public class BaseTest implements Constants {
 
         FilterableRequestSpecification req = (FilterableRequestSpecification) RestAssured.requestSpecification;
         req.removeHeader("Authorization");
-        new Authentication().login();
+        Authentication.login();
     }
 }

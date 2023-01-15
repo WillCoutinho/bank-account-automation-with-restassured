@@ -1,6 +1,7 @@
 # Bank Accounts Automation with Rest-Assured Framework
 
-Walkthrough to install, set up and run the scenarios with Rest Assured framework.
+Walkthrough to install, set up and run the scenarios with Rest-Assured framework.
+Used in this project Rest-Assured + JUnit5 for the tests with Hamcrest to assertions. 
 
 Scenarios for the API [Seu Barriga's Bank Accounts](http://seubarriga.wcaquino.me).
 

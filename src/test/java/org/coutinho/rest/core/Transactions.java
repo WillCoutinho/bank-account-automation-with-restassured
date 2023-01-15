@@ -2,12 +2,12 @@ package org.coutinho.rest.core;
 
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import utils.DateUtils;
+import org.coutinho.rest.utils.DateUtils;
+import org.jetbrains.annotations.NotNull;
 
 import static io.restassured.RestAssured.given;
 
-public class Transactions {
-    private Integer id;
+public final class Transactions {
     private String descricao;
     private String envolvido;
     private String tipo;
@@ -17,14 +17,6 @@ public class Transactions {
     private Boolean status;
     private Integer conta_id;
     private Integer usuario_id;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getDescricao() {
         return descricao;
@@ -98,7 +90,8 @@ public class Transactions {
         this.usuario_id = usuario_id;
     }
 
-    public Transactions createTransaction(Integer accountId, Integer userId) {
+    @NotNull
+    public static Transactions createTransaction(Integer accountId, Integer userId) {
         Transactions transactions = new Transactions();
 
         transactions.setConta_id(accountId);
@@ -114,9 +107,9 @@ public class Transactions {
         return transactions;
     }
 
-    public Response insertTransactionIntoAnAccountCreated() {
-        Response account = new Accounts().createAccountAndReturnItsData();
-        Transactions transaction = new Transactions().createTransaction(account.path("id"), account.path("usuario_id"));
+    public static Response insertTransactionIntoAnAccountCreated() {
+        Response account = Accounts.createAccountAndReturnItsData();
+        Transactions transaction = Transactions.createTransaction(account.path("id"), account.path("usuario_id"));
         transaction.setConta_id(account.path("id"));
         transaction.setUsuario_id(account.path("usuario_id"));
 
@@ -128,7 +121,7 @@ public class Transactions {
                 .statusCode(201).extract().response();
     }
 
-    public Integer getTransactionIdByDescription(String description) {
+    public static Integer getTransactionIdByDescription(String description) {
         return RestAssured.get("/transacoes?descricao="+description).then().extract().path("id[0]");
     }
 }

@@ -9,7 +9,6 @@ import static org.hamcrest.Matchers.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-
 import java.util.HashMap;
 
 import static io.restassured.RestAssured.given;
@@ -17,9 +16,11 @@ import static io.restassured.RestAssured.given;
 @DisplayName("Authentication Scenarios")
 @Tag("AuthenticationRegressionTest")
 public class AuthTest extends BaseTest {
+
     @Test
+    @DisplayName("Should Login with valid credentials")
     public void shouldLogInWithValidCredentials(){
-        HashMap<String, String> login = new Authentication().getLoginBody();
+        HashMap<String, String> login = Authentication.getValidLoginBody();
         given()
                 .body(login)
                 .when().post("/signin").then().statusCode(200)
@@ -27,7 +28,9 @@ public class AuthTest extends BaseTest {
                 .body("nome", is(notNullValue()))
                 .body("token", is(notNullValue()));
     }
+
     @Test
+    @DisplayName("Should not allow access to an endpoint without token")
     public void shouldNotAccessServiceWithoutToken() {
         FilterableRequestSpecification req = (FilterableRequestSpecification) RestAssured.requestSpecification;
         req.removeHeader("Authorization");

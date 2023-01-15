@@ -7,7 +7,7 @@ import org.coutinho.rest.core.Transactions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import utils.DateUtils;
+import org.coutinho.rest.utils.DateUtils;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
@@ -16,12 +16,12 @@ import static org.hamcrest.MatcherAssert.*;
 @DisplayName("Transaction Scenarios")
 @Tag("TransactionsRegressionTest")
 public class TransactionsTest extends BaseTest {
+
     @Test
     @DisplayName("Should insert a Transaction into an Account successfully")
     public void shouldInsertATransaction() {
-        Response account = new Accounts().createAccountAndReturnItsData();
-
-        Transactions transaction = new Transactions().createTransaction(account.path("id"), account.path("usuario_id"));
+        Response account = Accounts.createAccountAndReturnItsData();
+        Transactions transaction = Transactions.createTransaction(account.path("id"), account.path("usuario_id"));
 
         given()
                 .body(transaction)
@@ -64,8 +64,8 @@ public class TransactionsTest extends BaseTest {
     @Test
     @DisplayName("Should not insert a Movement Date greater than Current Date")
     public void shouldNotInsertMovementDateGreaterThanCurrentDate() {
-        Response account = new Accounts().createAccountAndReturnItsData();
-        Transactions transaction = new Transactions().createTransaction(account.path("id"), account.path("usuario_id"));
+        Response account = Accounts.createAccountAndReturnItsData();
+        Transactions transaction = Transactions.createTransaction(account.path("id"), account.path("usuario_id"));
         transaction.setData_transacao(DateUtils.getDateBetweenDaysAndCurrentDate(90));
 
         given()
@@ -81,8 +81,8 @@ public class TransactionsTest extends BaseTest {
     @Test
     @DisplayName("Should insert a Movement Date equal to Current Date")
     public void shouldInsertMovementDateEqualToCurrentDate() {
-        Response account = new Accounts().createAccountAndReturnItsData();
-        Transactions transaction = new Transactions().createTransaction(account.path("id"), account.path("usuario_id"));
+        Response account = Accounts.createAccountAndReturnItsData();
+        Transactions transaction = Transactions.createTransaction(account.path("id"), account.path("usuario_id"));
         transaction.setData_transacao(DateUtils.getDateBetweenDaysAndCurrentDate(0));
 
         given()
@@ -104,7 +104,7 @@ public class TransactionsTest extends BaseTest {
     @Test
     @DisplayName("Should not allow remove an account with transaction")
     public void shouldNotRemoveAccountWithTransaction() {
-        Response transaction = new Transactions().insertTransactionIntoAnAccountCreated();
+        Response transaction = Transactions.insertTransactionIntoAnAccountCreated();
 
         given()
                 .when()
@@ -117,7 +117,7 @@ public class TransactionsTest extends BaseTest {
     @Test
     @DisplayName("Should remove a transaction successfully")
     public void shouldRemoveTransaction(){
-        Integer transactionId = new Transactions().getTransactionIdByDescription("Movimentacao para exclusao");
+        Integer transactionId = Transactions.getTransactionIdByDescription("Movimentacao para exclusao");
 
         given()
                 .pathParam("id", transactionId)
@@ -125,6 +125,6 @@ public class TransactionsTest extends BaseTest {
                 .delete("/transacoes/{id}")
                 .then().statusCode(204);
 
-        assertThat(new Transactions().getTransactionIdByDescription("Movimentacao para exclusao"), is(nullValue()));
+        assertThat(Transactions.getTransactionIdByDescription("Movimentacao para exclusao"), is(nullValue()));
     }
 }
