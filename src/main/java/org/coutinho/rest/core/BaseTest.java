@@ -3,9 +3,11 @@ package org.coutinho.rest.core;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
+import io.restassured.specification.FilterableRequestSpecification;
 import static org.hamcrest.Matchers.*;
 import org.junit.jupiter.api.BeforeAll;
-public class BaseTest implements Constants{
+
+public class BaseTest implements Constants {
 
     @BeforeAll
     public static void setup(){
@@ -20,8 +22,10 @@ public class BaseTest implements Constants{
         ResponseSpecBuilder resBuilder = new ResponseSpecBuilder();
         resBuilder.expectResponseTime(lessThan(MAX_TIMEOUT));
         RestAssured.responseSpecification = resBuilder.build();
-
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
-    }
 
+        FilterableRequestSpecification req = (FilterableRequestSpecification) RestAssured.requestSpecification;
+        req.removeHeader("Authorization");
+        new Authentication().login();
+    }
 }

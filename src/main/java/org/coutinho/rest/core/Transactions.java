@@ -1,6 +1,12 @@
-package rest.tests;
+package org.coutinho.rest.core;
 
-public class AccountTransactions {
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
+import utils.DateUtils;
+
+import static io.restassured.RestAssured.given;
+
+public class Transactions {
     private Integer id;
     private String descricao;
     private String envolvido;
@@ -90,5 +96,39 @@ public class AccountTransactions {
 
     public void setUsuario_id(Integer usuario_id) {
         this.usuario_id = usuario_id;
+    }
+
+    public Transactions createTransaction(Integer accountId, Integer userId) {
+        Transactions transactions = new Transactions();
+
+        transactions.setConta_id(accountId);
+        transactions.setUsuario_id(userId);
+        transactions.setDescricao("Transaction description");
+        transactions.setEnvolvido("Transaction involved");
+        transactions.setTipo("REC");
+        transactions.setData_transacao(DateUtils.getDateBetweenDaysAndCurrentDate(0));
+        transactions.setData_pagamento(DateUtils.getDateBetweenDaysAndCurrentDate(60));
+        transactions.setValor(1000.99f);
+        transactions.setStatus(true);
+
+        return transactions;
+    }
+
+    public Response insertTransactionIntoAnAccountCreated() {
+        Response account = new Accounts().createAccountAndReturnItsData();
+        Transactions transaction = new Transactions().createTransaction(account.path("id"), account.path("usuario_id"));
+        transaction.setConta_id(account.path("id"));
+        transaction.setUsuario_id(account.path("usuario_id"));
+
+        return given()
+                .body(transaction)
+                .when()
+                .post("/transacoes")
+                .then()
+                .statusCode(201).extract().response();
+    }
+
+    public Integer getTransactionIdByDescription(String description) {
+        return RestAssured.get("/transacoes?descricao="+description).then().extract().path("id[0]");
     }
 }
