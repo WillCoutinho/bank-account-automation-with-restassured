@@ -38,7 +38,7 @@ Install **GIT**: ``sudo apt install git``
 In your terminal (with admin privileges), run this command to clone project, install all dependencies and run the tests
 
 ```bash
-git clone https://github.com/LittleCout0/bank-account-automation-with-restassured && cd bank-account-automation-with-restassured && mvn install 
+git clone https://github.com/WillCoutinho/bank-account-automation-with-restassured && cd bank-account-automation-with-restassured && mvn install 
 ```
 
 To run the suite tests use the command: ``mvn test``  
@@ -47,7 +47,7 @@ To run the suite tests use the command: ``mvn test``
 
 #### Git Repository
 
-GitHub: [_Bank Accounts Automation with Rest-Assured Framework_](https://github.com/LittleCout0/bank-account-automation-with-restassured)
+GitHub: [_Bank Accounts Automation with Rest-Assured Framework_](https://github.com/WillCoutinho/bank-account-automation-with-restassured)
 
 ##
 
